@@ -17,19 +17,14 @@ from pykwalify.core import Core
 
 ########## Argument check ##########
 parser = argparse.ArgumentParser()
-#parser.add_argument("--parameter-file",type=str, help="file location of the input yaml parameter file",required=True)
-parser.add_argument("--parameter-file",type=str, help="file location of the input yaml parameter file",required=False)
-#parser.add_argument("--schema-file",type=str, help="file location of the schema yaml file",required=True)
-parser.add_argument("--schema-file",type=str, help="file location of the schema yaml file",required=False)
+parser.add_argument("--parameter-file",type=str, help="file location of the input yaml parameter file",required=True)
+#parser.add_argument("--parameter-file",type=str, help="file location of the input yaml parameter file",required=False)
+parser.add_argument("--schema-file",type=str, help="file location of the schema yaml file",required=True)
+#parser.add_argument("--schema-file",type=str, help="file location of the schema yaml file",required=False)
 args = parser.parse_args()
 
 parameter_file = args.parameter_file
 schema_file = args.schema_file
-
-parameter_file = "Main-parameters-prd-weu.yml"
-schema_file = "Main-Parameters-Schema.yml"
-parameter_file = "Ipgroup-Tfparameters.yml"
-schema_file = "Ipgroup-Parameters-TfSchema.yml"
 
 ########## Validate existance of input files ##########
 print(f"Input parameter file is: {parameter_file}. Checking if it exists...")
@@ -64,8 +59,6 @@ except Exception as e:
 
 ########## Transform parameter file to json file ##########
 print('Transforming the yaml parameter file to a TerraForm Tfvars file...')
-
-parameter_file = "Wafpolicy-TFParameters.yml"
 
 with open(parameter_file, 'r') as file:
     configuration = yaml.safe_load(file)
