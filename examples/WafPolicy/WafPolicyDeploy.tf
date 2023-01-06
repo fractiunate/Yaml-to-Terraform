@@ -33,7 +33,7 @@ module "Resource-Group" {
 module "WafPolicies" {
   source         = "./Modules/Azure/WafPolicy"
 
-  resource_group = var.rg
+  resource_group = var.resource_group
   location       = var.location
   wafpolicylist = var.wafpolicylist   
   
