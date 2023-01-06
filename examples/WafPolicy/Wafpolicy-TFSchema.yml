@@ -1,0 +1,107 @@
+desc: Schema used for validation of YAML configuration file. See, https://pykwalify.readthedocs.io/en/latest/validation-rules.html
+type: map
+mapping:
+  subid:
+    type: str 
+    required: true
+  clientid:
+    type: str 
+    required: true
+  client_secret:
+    type: str 
+    required: true
+  tenantid:
+    type: str 
+    required: true
+  location:
+    type: str 
+    required: true
+  resource_group:
+    type: str 
+    required: true
+  wafpolicylist:
+    type: seq
+    required: true
+    sequence:
+     - type: map
+       required: true
+       mapping:
+        name:
+          type: str
+          required: true
+        policy_settings:
+          type: map
+          required: false
+          mapping:
+            enabled:
+              type: str
+              required: false
+              enum: [
+                "true",
+                "false"
+              ]
+            mode:
+              type: str
+              required: false
+              enum: [
+                "Detection",
+                "Prevention"
+              ]
+            file_upload_limit_in_mb:
+              type: int
+              required: false
+              range:
+                min: 1
+                max: 4000
+            request_body_check:
+              type: str
+              required: false
+              enum: [
+                "true",
+                "false"
+              ]
+            max_request_body_size_in_kb:
+              type: int
+              required: false
+              range:
+                min: 8
+                max: 2000
+        managed_rule_set:
+          type: seq 
+          required: true 
+          sequence:
+            - type: map 
+              required: true
+              mapping:
+                type: 
+                  type: str 
+                  required: true 
+                version:
+                  type: str 
+                  required: true 
+                rule_group_override:
+                  type: seq 
+                  required: false 
+                  sequence: 
+                    - type: map 
+                      required: false
+                      mapping:
+                        rule_group_name:
+                          type: str 
+                          required : true
+                        rules:
+                          type: seq 
+                          required : true 
+                          sequence: 
+                            - type: map 
+                              required: true 
+                              mapping:
+                                id:
+                                  type: str 
+                                  required: true
+                                enabled:
+                                  type: str
+                                  required: true
+                                action:
+                                  type: str 
+                                  required : false
