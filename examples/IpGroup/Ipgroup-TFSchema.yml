@@ -1,0 +1,45 @@
+desc: Schema used for validation of YAML configuration file. See, https://pykwalify.readthedocs.io/en/latest/validation-rules.html
+type: map
+mapping:
+  subid:
+    type: str 
+    required: true
+  clientid:
+    type: str 
+    required: true
+  client_secret:
+    type: str 
+    required: true
+  tenantid:
+    type: str 
+    required: true
+  location:
+    type: str 
+    required: true
+  rg:
+    type: str 
+    required: true
+  IpGroups:
+    type: seq
+    required: true
+    sequence:
+     - type: map
+       required: true
+       mapping:
+         Name:
+           type: str
+           required: true
+         Location:
+           type: str
+           required: true
+         IpAddresses:
+           type: seq
+           required: true
+           sequence:
+             - type: str
+               required: false
+
+  Tagging:
+    type: map
+    allowempty: true
+    
