@@ -26,7 +26,7 @@ data "azurerm_client_config" "current" {}
 module "Resource-Group" {
   source         = "./modules/azure/ResourceGroup"
 
-  rg             = var.rg
+  rg             = var.resource_group
   location       = var.location          
 }
 
