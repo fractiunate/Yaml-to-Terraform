@@ -66,42 +66,166 @@ mapping:
               range:
                 min: 8
                 max: 2000
-        managed_rule_set:
-          type: seq 
-          required: true 
+        custom_rules:
+          type: seq
+          required: true
+          allowempty: true
           sequence:
             - type: map 
               required: true
               mapping:
-                type: 
+                name:
                   type: str 
+                  required: true
+                priority:
+                  type: int
                   required: true 
-                version:
-                  type: str 
-                  required: true 
-                rule_group_override:
+                rule_type:
+                  type: str
+                  required: true
+                  enum: [
+                    "Invalid",
+                    "MatchRule"
+                  ]
+                action:
+                  type: str
+                  required: true
+                  enum: [
+                    "Allow",
+                    "Block",
+                    "Log"
+                  ]
+                match_conditions:
                   type: seq 
-                  required: false 
-                  sequence: 
+                  required: true 
+                  sequence:
                     - type: map 
-                      required: false
                       mapping:
-                        rule_group_name:
-                          type: str 
-                          required : true
-                        rules:
+                        match_variables:
                           type: seq 
-                          required : true 
-                          sequence: 
+                          required: true
+                          sequence:
                             - type: map 
-                              required: true 
                               mapping:
-                                id:
+                                variable_name:
+                                  type: str 
+                                  required: true 
+                                  enum: [
+                                    "PostArgs",
+                                    "QueryString",
+                                    "RemoteAddr",
+                                    "RequestBody",
+                                    "RequestCookies",
+                                    "RequestHeaders",
+                                    "RequestMethod",
+                                    "RequestUri"
+                                  ]
+                                selector:
                                   type: str 
                                   required: true
-                                enabled:
-                                  type: str
-                                  required: true
-                                action:
-                                  type: str 
-                                  required : false
+                        match_values:
+                          type: seq
+                          required: true
+                          sequence:
+                            - type: str
+                              required: false
+                        operator:
+                          type: str 
+                          required: true
+                          enum: [
+                            "BeginsWith",
+                            "Contains",
+                            "EndsWith",
+                            "Equal",
+                            "GeoMatch",
+                            "GreaterThan",
+                            "GreaterThanOrEqual",
+                            "IPMatch",
+                            "LessThan",
+                            "LessThanOrEqual",
+                            "Regex"
+                          ]
+                        negation_condition:
+                          type: str
+                          required: true
+                          enum: [
+                            "true",
+                            "false"
+                          ]
+        managed_rules:
+          type: map
+          required: true
+          mapping:
+            exclusion:
+              type: seq 
+              required: true
+              sequence:
+                - type: map
+                  required: false
+                  mapping:
+                    match_variable:
+                      type: str 
+                      required: true
+                      enum: [
+                        "RequestArgKeys",
+                        "RequestArgNames",
+                        "RequestArgValues",
+                        "RequestCookieKeys",
+                        "RequestCookieNames",
+                        "RequestCookieValues",
+                        "RequestHeaderKeys",
+                        "RequestHeaderNames",
+                        "RequestHeaderValues"
+                      ]
+                    selector_match_operator:
+                      type: str 
+                      required: true
+                      enum: [
+                        "Contains",
+                        "EndsWith",
+                        "Equals",
+                        "EqualsAny",
+                        "StartsWith"
+                      ]
+                    selector:
+                      type: str 
+                      required: true
+            managed_rule_set:
+              type: seq 
+              required: true 
+              sequence:
+                - type: map 
+                  required: true
+                  mapping:
+                    type: 
+                      type: str 
+                      required: true 
+                    version:
+                      type: str 
+                      required: true 
+                    rule_group_override:
+                      type: seq 
+                      required: false 
+                      sequence: 
+                        - type: map 
+                          required: false
+                          mapping:
+                            rule_group_name:
+                              type: str 
+                              required : true
+                            rules:
+                              type: seq 
+                              required : true 
+                              sequence: 
+                                - type: map 
+                                  required: true 
+                                  mapping:
+                                    id:
+                                      type: str 
+                                      required: true
+                                    enabled:
+                                      type: str
+                                      required: true
+                                    action:
+                                      type: str 
+                                      required : false
