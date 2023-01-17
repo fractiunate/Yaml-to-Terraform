@@ -12,7 +12,7 @@ location = "West Europe"
 
 wafpolicylist = {
   wafpolicylist0 = {
-    name = "waf-agw-prd-shared-weu-01"
+    name = "waf-policy-weu-01"
     policy_settings = {
       enabled = "true"
       mode = "Prevention"
@@ -60,7 +60,7 @@ wafpolicylist = {
     }
   }
   wafpolicylist1 = {
-    name = "waf-agw-prd-shared-weu-02"
+    name = "waf-policy-weu-02"
     policy_settings = {
       enabled = "true"
       mode = "Prevention"
