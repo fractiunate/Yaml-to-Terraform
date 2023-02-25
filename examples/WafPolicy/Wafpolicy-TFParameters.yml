@@ -54,9 +54,26 @@ wafpolicylist:
           - match_variable: RequestHeaderNames
             selector_match_operator: Equals
             selector: x-company-secret-header
+            excluded_rule_set: []
           - match_variable: RequestCookieNames
             selector_match_operator: EndsWith
             selector: too-tasty
+            excluded_rule_set: []
+          - match_variable: RequestArgNames
+            selector_match_operator: EndsWith
+            selector: myarg
+            excluded_rule_set:
+              - type: OWASP
+                version: "3.2"
+                rule_group: 
+                  - rule_group_name: REQUEST-920-PROTOCOL-ENFORCEMENT
+                    excluded_rules: 
+                      - "920100"
+                      - "920120"
+                  - rule_group_name: REQUEST-921-PROTOCOL-ATTACK
+                    excluded_rules: 
+                      - "921110"
+                      - "921120"
         managed_rule_set:
           - type: OWASP
             version: "3.2"
