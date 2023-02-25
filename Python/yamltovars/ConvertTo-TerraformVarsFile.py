@@ -6,14 +6,18 @@ import argparse
 from pykwalify.core import Core
 
 ########## Usage ##########
-# usage: ConvertTo-TerraformVarsFile.py [-h] --parameter-file PARAMETER_FILE --schema-file SCHEMA_FILE
+# usage: ConvertTo-TerraformVarsFile.py [-h] --parameter-file PARAMETER_FILE --schema-file SCHEMA_FILE [--output-file OUTPUT_FILE]
 
-# optional arguments:
-#   -h, --help            show this help message and exit
+# required parameters:
 #   --parameter-file PARAMETER_FILE
 #                         file location of the input yaml parameter file
 #   --schema-file SCHEMA_FILE
 #                         file location of the schema yaml file
+#
+# optional arguments:
+#   -h, --help            show this help message and exit
+#   --output-file OUTPUT_FILE
+#                         name of output file to generate
 
 ########## Argument check ##########
 parser = argparse.ArgumentParser()
@@ -21,11 +25,17 @@ parser.add_argument("--parameter-file",type=str, help="file location of the inpu
 #parser.add_argument("--parameter-file",type=str, help="file location of the input yaml parameter file",required=False)
 parser.add_argument("--schema-file",type=str, help="file location of the schema yaml file",required=True)
 #parser.add_argument("--schema-file",type=str, help="file location of the schema yaml file",required=False)
+parser.add_argument("--output-file",type=str, help="file location and name of the output file",required=False)
 args = parser.parse_args()
 
 parameter_file = args.parameter_file
 schema_file = args.schema_file
 
+if args.output_file is not None:
+    output_file = args.output_file
+else:
+    output_file = 'terraform.tfvars'
+    
 ########## Validate existance of input files ##########
 print(f"Input parameter file is: {parameter_file}. Checking if it exists...")
 try:
@@ -63,7 +73,7 @@ print('Transforming the yaml parameter file to a TerraForm Tfvars file...')
 with open(parameter_file, 'r') as file:
     configuration = yaml.safe_load(file)
 
-with open('terraform.tfvars', 'w') as terravar_file:
+with open(output_file, 'w') as terravar_file:
     terrafile = TerraYaml.parse_yaml(configuration, 2)
     terravar_file.write(terrafile)
     
