@@ -1,0 +1,52 @@
+azuread:
+  groups:
+    - name: "azgr_group1"
+      description: "This is Group 1"
+    - name: "azgr_group2"
+      description: "This is Group 2"
+
+  users:
+    - user_principal_name: "John@yourdomain.com"
+      display_name: "John@yourdomain.com"
+      password: "password1@password1"
+      force_password_change: true
+      mail_nickname: "user1"
+      given_name: "John"
+      surname: "Doe"
+      job_title: "Engineer"
+      department: "IT"
+      country: "US"
+      usage_location: "US"
+      mobile_phone: "555-555-5555"
+      city: "Seattle"
+      state: "WA"
+      street_address: "123 Main St"
+      postal_code: "98101"
+      account_enabled: true
+      on_premises_immutable_id: "user1"
+
+    - user_principal_name: "Jane@yourdomain.com"
+      display_name: "Jane@yourdomain.com"
+      password: "password2@password2"
+      force_password_change: false
+      mail_nickname: "user2"
+      given_name: "Jane"
+      surname: "Doe"
+      job_title: "Manager"
+      department: "Sales"
+      country: "US"
+      usage_location: "US"
+      mobile_phone: "555-555-5555"
+      city: "Seattle"
+      state: "WA"
+      street_address: "123 Main St"
+      postal_code: "98101"
+      account_enabled: true
+      on_premises_immutable_id: "user2"
+
+  group_assignments:
+    azgr_group1:
+       - "Jane@yourdomain.com"
+       - "John@yourdomain.com"
+    azgr_group2:
+       - "Jane@yourdomain.com"
